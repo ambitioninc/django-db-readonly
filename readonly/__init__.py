@@ -53,13 +53,13 @@ class ReadOnlyCursorWrapper(object):
 
     def execute(self, sql, params=()):
         # Check the SQL
-        if self.readonly and self._write_sql(sql):
+        if self.readonly and self._write_sql(sql) and not self._whitelist_table(sql):
             raise DatabaseWriteDenied
         return self.cursor.execute(sql, params)
 
     def executemany(self, sql, param_list):
         # Check the SQL
-        if self.readonly and self._write_sql(sql):
+        if self.readonly and self._write_sql(sql) and not self._whitelist_table(sql):
             raise DatabaseWriteDenied
         return self.cursor.executemany(sql, param_list)
 
@@ -68,6 +68,9 @@ class ReadOnlyCursorWrapper(object):
 
     def __iter__(self):
         return iter(self.cursor)
+
+    def _whitelist_table(self, sql):
+        return 'django_session' in sql or 'auth_user' in sql
 
     def _write_sql(self, sql):
         return sql.startswith(self.SQL_WRITE_BLACKLIST)
