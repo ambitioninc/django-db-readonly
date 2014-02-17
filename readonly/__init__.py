@@ -70,7 +70,7 @@ class ReadOnlyCursorWrapper(object):
         return iter(self.cursor)
 
     def _whitelist_table(self, sql):
-        return 'django_session' in sql or 'auth_user' in sql
+        return 'django_session' in sql or 'auth_user' in sql or 'narrative_' in sql
 
     def _write_sql(self, sql):
         return sql.startswith(self.SQL_WRITE_BLACKLIST)
