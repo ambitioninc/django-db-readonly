@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-version = '0.3.1'
+version = '0.2.1'
 
 import os
 import sys
