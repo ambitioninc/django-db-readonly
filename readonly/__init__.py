@@ -70,7 +70,12 @@ class ReadOnlyCursorWrapper(object):
         return iter(self.cursor)
 
     def _whitelist_table(self, sql):
-        return 'django_session' in sql or 'auth_user' in sql or 'narrative_' in sql
+        # Get the whitelisted tables
+        whitelisted_tables = getattr(settings, 'SITE_READ_ONLY_WHITELISTED_TABLES', None)
+        if whitelisted_tables is None:
+            return False
+        else:
+            return any(table in sql for table in whitelisted_tables)
 
     def _write_sql(self, sql):
         return sql.startswith(self.SQL_WRITE_BLACKLIST)
