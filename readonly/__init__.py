@@ -10,8 +10,14 @@ __version__ = VERSION
 
 from time import time
 
+import django
 from django.conf import settings
-from django.db.backends import util
+
+if django.VERSION < (1, 7):
+    from django.db.backends import util
+else:
+    from django.db.backends import utils as util
+
 from django.utils.log import getLogger
 from .exceptions import DatabaseWriteDenied
 
@@ -46,6 +52,7 @@ class ReadOnlyCursorWrapper(object):
         # Data Manipulation
         'INSERT INTO', 'UPDATE', 'REPLACE', 'DELETE FROM',
     )
+    _last_executed = ''
 
     def __init__(self, cursor):
         self.cursor = cursor
@@ -103,7 +110,8 @@ class CursorDebugWrapper(CursorWrapper):
                 'sql': sql,
                 'time': "%.3f" % duration,
             })
-            logger.debug('(%.3f) %s; args=%s' % (duration, sql, params),
+            logger.debug(
+                '(%.3f) %s; args=%s' % (duration, sql, params),
                 extra={'duration': duration, 'sql': sql, 'params': params}
             )
 
@@ -118,7 +126,8 @@ class CursorDebugWrapper(CursorWrapper):
                 'sql': '%s times: %s' % (len(param_list), sql),
                 'time': "%.3f" % duration,
             })
-            logger.debug('(%.3f) %s; args=%s' % (duration, sql, param_list),
+            logger.debug(
+                '(%.3f) %s; args=%s' % (duration, sql, param_list),
                 extra={'duration': duration, 'sql': sql, 'params': param_list}
             )
 
