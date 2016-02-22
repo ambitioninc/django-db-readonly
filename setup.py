@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-version = '0.2.3.ambition'
+version = '0.2.4.ambition'
 
 import os
 import sys

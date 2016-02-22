@@ -18,11 +18,11 @@ if django.VERSION < (1, 7):
 else:
     from django.db.backends import utils as util
 
-from django.utils.log import getLogger
 from .exceptions import DatabaseWriteDenied
+import logging
 
 
-logger = getLogger('django.db.backends')
+logger = logging.getLogger('django.db.backends')
 
 
 def _readonly():
