@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from .exceptions import DatabaseWriteDenied
 from django.conf import settings
 from django.http import HttpResponse

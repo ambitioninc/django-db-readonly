@@ -3,6 +3,8 @@ Django DB Readonly
 ~~~~~~~~~~~~~~~~~~
 """
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import pkg_resources
 
 VERSION = pkg_resources.get_distribution('django-db-readonly').version
