@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-version = '0.2.5'
+version = '1.0'
 
 import os
 import sys
@@ -31,7 +31,7 @@ class mytest(test):
         # test.run(self, *args, **kwargs)
 
 setup(
-    name='django-db-readonly',
+    name='ambition-django-db-readonly',
     version=version,
     author='Chris Streeter',
     author_email='pypi@chrisstreeter.com',
